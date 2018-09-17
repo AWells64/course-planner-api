@@ -11,6 +11,7 @@ $router->group(["prefix" => "courses"], function ($router) {
 
 $router->group(['middleware' => ['api','cors']], function ($router) {
     $router->post('auth/register', 'Auth\RegisterController@create');
+    $router->post('auth/login', 'Auth\LoginController@apiLogin');
  });
 
 
