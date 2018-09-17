@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Course;
+use App\Http\Resources\CourseResource;
+use App\Http\Resources\CourseListResource;
 
 class Courses extends Controller
 {
@@ -14,7 +16,7 @@ class Courses extends Controller
      */
     public function index()
     {
-        return Course::all();
+        return CourseListResource::collection(Course::all());
     }
 
     /**
@@ -31,8 +33,7 @@ class Courses extends Controller
         // create article with data and store in DB
         $course = Course::create($data);
 
-        // return the article along with a 201 status code
-        return response($course, 201);
+       return new CourseResource($course);
 
     }
 
@@ -42,9 +43,9 @@ class Courses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Course $course)
     {
-        //
+        return new CourseResource($course);
     }
 
     /**
@@ -54,10 +55,8 @@ class Courses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Course $course)
     {
-        // find the current article
-        $course = Course::find($id);
 
         // get the request data
         $data = $request->only(["title", "description", "price", "difficulty", "rating", "score"]);
@@ -66,7 +65,7 @@ class Courses extends Controller
         $course->fill($data)->save();
 
         // return the updated version
-        return $course;
+        return new CourseResource($course);
 
     }
 
@@ -76,9 +75,8 @@ class Courses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course)
     {
-        $course = Course::find($id);
         $course->delete();
 
     // use a 204 code as there is no content in the response
