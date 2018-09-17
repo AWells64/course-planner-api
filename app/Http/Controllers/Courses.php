@@ -7,6 +7,7 @@ use App\Course;
 use App\Http\Resources\CourseResource;
 use App\Http\Resources\CourseListResource;
 use App\Http\Requests\CourseRequest;
+use App\Http\Requests\CourseCompleteRequest;
 
 class Courses extends Controller
 {
@@ -76,6 +77,19 @@ class Courses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function markComplete(CourseCompleteRequest $request, Course $course)
+    {
+        // get the request data
+        $data = $request->only(["complete"]);
+
+        // update the article
+        $course->fill($data)->save();
+
+        // return the updated version
+        return new CourseResource($course);
+    }
+
     public function destroy(Course $course)
     {
         $course->delete();

@@ -7,6 +7,7 @@ $router->group(["prefix" => "courses"], function ($router) {
 
     $router->get("{course}", "Courses@show");
     $router->put("{course}", "Courses@update");
+    $router->patch("{course}", "Courses@markComplete");
     $router->delete("{course}", "Courses@destroy");
 });
 
