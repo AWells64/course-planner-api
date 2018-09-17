@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Course;
 use App\Http\Resources\CourseResource;
 use App\Http\Resources\CourseListResource;
+use App\Http\Requests\CourseRequest;
 
 class Courses extends Controller
 {
@@ -25,7 +26,7 @@ class Courses extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CourseRequest $request)
     {
         // get post request data for title and article
         $data = $request->only(["title", "description", "price", "difficulty", "rating", "score"]);
@@ -55,7 +56,7 @@ class Courses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(CourseRequest $request, Course $course)
     {
 
         // get the request data
