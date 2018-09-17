@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Course;
+use App\Http\Resources\CourseResource;
+use App\Http\Resources\CourseListResource;
+use App\Http\Requests\CourseRequest;
+use App\Http\Requests\CourseCompleteRequest;
 
 class Courses extends Controller
 {
@@ -14,7 +18,7 @@ class Courses extends Controller
      */
     public function index()
     {
-        return Course::all();
+        return CourseListResource::collection(Course::all());
     }
 
     /**
@@ -23,7 +27,7 @@ class Courses extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CourseRequest $request)
     {
         // get post request data for title and article
         $data = $request->only(["title", "description", "price", "difficulty", "rating", "score"]);
@@ -31,8 +35,7 @@ class Courses extends Controller
         // create article with data and store in DB
         $course = Course::create($data);
 
-        // return the article along with a 201 status code
-        return response($course, 201);
+       return new CourseResource($course);
 
     }
 
@@ -42,9 +45,9 @@ class Courses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Course $course)
     {
-        //
+        return new CourseResource($course);
     }
 
     /**
@@ -54,9 +57,18 @@ class Courses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CourseRequest $request, Course $course)
     {
-        //
+
+        // get the request data
+        $data = $request->only(["title", "description", "price", "difficulty", "rating", "score"]);
+
+        // update the article
+        $course->fill($data)->save();
+
+        // return the updated version
+        return new CourseResource($course);
+
     }
 
     /**
@@ -65,8 +77,25 @@ class Courses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+
+    public function markComplete(CourseCompleteRequest $request, Course $course)
     {
-        //
+        // get the request data
+        $data = $request->only(["complete"]);
+
+        // update the article
+        $course->fill($data)->save();
+
+        // return the updated version
+        return new CourseResource($course);
+    }
+
+    public function destroy(Course $course)
+    {
+        $course->delete();
+
+    // use a 204 code as there is no content in the response
+    return response(null, 204);
+
     }
 }

@@ -121,6 +121,7 @@
             "time": "2018-09-06T13:20:53+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "defuse/php-encryption",
             "version": "v2.2.1",
             "source": {
@@ -184,6 +185,8 @@
             "time": "2018-07-24T23:27:56+00:00"
         },
         {
+=======
+>>>>>>> f6ef2bc4a699c42ede6362ca99723c84d06c8e51
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
             "source": {
