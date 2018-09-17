@@ -56,7 +56,18 @@ class Courses extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // find the current article
+        $course = Course::find($id);
+
+        // get the request data
+        $data = $request->only(["title", "description", "price", "difficulty", "rating", "score"]);
+
+        // update the article
+        $course->fill($data)->save();
+
+        // return the updated version
+        return $course;
+
     }
 
     /**
@@ -67,6 +78,11 @@ class Courses extends Controller
      */
     public function destroy($id)
     {
-        //
+        $course = Course::find($id);
+        $course->delete();
+
+    // use a 204 code as there is no content in the response
+    return response(null, 204);
+
     }
 }
