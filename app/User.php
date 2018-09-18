@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use app\Course;
 
 use Laravel\Passport\HasApiTokens;
 
@@ -29,4 +30,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function setCourse(Course $course)
+    {
+        $this->courses()->attach($course['id']);
+
+        return $this->courses();
+    }
 }

@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Course;
+use App\User;
 use App\Http\Resources\CourseResource;
 use App\Http\Resources\CourseListResource;
 use App\Http\Requests\CourseRequest;
 use App\Http\Requests\CourseCompleteRequest;
+use App\Http\Requests\CourseToUserRequest;
+
+use Illuminate\Support\Facades\Auth;
 
 class Courses extends Controller
 {
@@ -35,7 +39,29 @@ class Courses extends Controller
         // create article with data and store in DB
         $course = Course::create($data);
 
-       return new CourseResource($course);
+        return new CourseResource($course);
+
+    }
+
+    public function storeToUser(CourseToUserRequest $request, Course $course)
+    {
+        
+        // user model add the relationsip
+        // course model add the relationship
+        // user model add method to attach / save course
+        // setCourse
+        // $this->courses()->attach($course['id']);
+        // get user instance from Auth
+        // call the setCourse method, passing in the course instance / id
+        // $user->courses
+        if(Auth::check()){
+            $user = Auth::user();
+            $user->setCourse($course);
+        }
+
+  
+
+        return new CourseResource($course);
 
     }
 

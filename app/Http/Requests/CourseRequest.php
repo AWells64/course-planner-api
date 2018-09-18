@@ -31,7 +31,6 @@ class CourseRequest extends FormRequest
             "rating" => ["required", "integer"],
             "difficulty" => ["required", "string", "max:20"],
             "score" => ["required", "integer"],
-
         ];
     }
 }

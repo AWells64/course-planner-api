@@ -13,7 +13,8 @@ $router->group(['middleware' => ['api','cors']], function ($router) {
     $router->post('auth/register', 'Auth\RegisterController@create');
     $router->post('auth/login', 'Auth\LoginController@apiLogin');
  });
-
-
-
-	
+    
+ 
+ $router->group(['middleware' => ['auth:api','cors'], "prefix" => "courses"], function ($router) {
+    $router->post("{course}/save", "Courses@storeToUser");
+ });
