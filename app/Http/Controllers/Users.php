@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Course;
+use App\User;
+use App\Http\Resources\CourseResource;
+use App\Http\Resources\CourseListResource;
+use App\Http\Requests\CourseRequest;
+use App\Http\Requests\CourseCompleteRequest;
+use App\Http\Requests\CourseToUserRequest;
+use Illuminate\Support\Facades\Auth;
+
 class Users extends Controller
 {
     /**
@@ -11,7 +20,7 @@ class Users extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexCourses()
     {
         //
     }

@@ -1,5 +1,11 @@
 <?php
 
+$router->group(['middleware' => ['auth:api','cors'], "prefix" => "courses"], function ($router) {
+    $router->post("{course}/save", "Courses@storeToUser");
+    $router->get("fetch", "Courses@indexFromUser");
+ });
+
+
 $router->group(["prefix" => "courses"], function ($router) {
 	$router->post("", "Courses@store");
 	$router->get("", "Courses@index");
@@ -15,6 +21,4 @@ $router->group(['middleware' => ['api','cors']], function ($router) {
  });
     
  
- $router->group(['middleware' => ['auth:api','cors'], "prefix" => "courses"], function ($router) {
-    $router->post("{course}/save", "Courses@storeToUser");
- });
+ 

@@ -25,6 +25,14 @@ class Courses extends Controller
         return CourseListResource::collection(Course::all());
     }
 
+    public function indexFromUser()
+    {
+        if(Auth::check()){
+            $user = Auth::user();
+            return CourseListResource::collection($user->courses);  
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -58,8 +66,6 @@ class Courses extends Controller
             $user = Auth::user();
             $user->setCourse($course);
         }
-
-  
 
         return new CourseResource($course);
 
