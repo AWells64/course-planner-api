@@ -29,7 +29,7 @@ class Courses extends Controller
     {
         if(Auth::check()){
             $user = Auth::user();
-            return CourseListResource::collection($user->courses);  
+            return CourseResource::collection($user->courses);  
         }
     }
 
@@ -125,6 +125,18 @@ class Courses extends Controller
     public function destroy(Course $course)
     {
         $course->delete();
+
+    // use a 204 code as there is no content in the response
+    return response(null, 204);
+
+    }
+
+    public function destroyFromUser(Course $course)
+    {
+        if(Auth::check()){
+            $user = Auth::user();
+            $user->deleteCourse($course);
+        }
 
     // use a 204 code as there is no content in the response
     return response(null, 204);

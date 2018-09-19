@@ -3,6 +3,7 @@
 $router->group(['middleware' => ['auth:api','cors'], "prefix" => "courses"], function ($router) {
     $router->post("{course}/save", "Courses@storeToUser");
     $router->get("fetch", "Courses@indexFromUser");
+    $router->delete("{course}/remove", "Courses@destroyFromUser");
  });
 
 

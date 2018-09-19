@@ -41,4 +41,9 @@ class User extends Authenticatable
 
         return $this->courses();
     }
+
+    public function deleteCourse(Course $course)
+    {
+        $this->courses()->detach($course['id']);
+    }
 }
