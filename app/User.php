@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         $this->courses()->detach($course['id']);
     }
+
+    public function updateCourse($data, Course $course)
+    {
+        $this->courses()->updateExistingPivot($course['id'], ['completed' => $data['complete']]);
+    }
 }

@@ -7,6 +7,7 @@ use App\Course;
 use App\User;
 use App\Http\Resources\CourseResource;
 use App\Http\Resources\CourseListResource;
+use App\Http\Resources\CourseCompleteResource;
 use App\Http\Requests\CourseRequest;
 use App\Http\Requests\CourseCompleteRequest;
 use App\Http\Requests\CourseToUserRequest;
@@ -110,16 +111,22 @@ class Courses extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function markComplete(CourseCompleteRequest $request, Course $course)
+    public function markComplete(Request $request, Course $course)
     {
-        // get the request data
-        $data = $request->only(["complete"]);
+        // // get the request data
+        // $data = $request->only(["complete"]);
 
-        // update the article
-        $course->fill($data)->save();
+        // // update the article
+        // $course->fill($data)->save();
 
-        // return the updated version
-        return new CourseResource($course);
+        // // return the updated version
+        // return new CourseResource($course);
+
+        if(Auth::check()){
+            $data = $request->only(["complete"]);
+            $user = Auth::user();
+            $updatedCourse = $user->updateCourse($data, $course);
+        }
     }
 
     public function destroy(Course $course)
